@@ -57,6 +57,9 @@ import de.rub.nds.tlsattacker.tls.workflow.WorkflowConfigurationFactory;
 import de.rub.nds.tlsattacker.tls.workflow.WorkflowExecutor;
 import de.rub.nds.tlsattacker.tls.workflow.WorkflowTrace;
 import de.rub.nds.tlsattacker.transport.TransportHandler;
+// BEGIN CHANGES AW
+import de.rub.nds.tlsattacker.transport.SimpleTransportHandler;
+// END CHANGES AW
 import de.rub.nds.tlsattacker.util.ServerStartCommandExecutor;
 import de.rub.nds.tlsattacker.util.UnoptimizedDeepCopy;
 
@@ -175,6 +178,9 @@ public class SimpleFuzzer extends Fuzzer {
             LOGGER.log(LogLevel.CONSOLE_OUTPUT, "Starting stage 1: crypto fuzzing ");
             startCryptoFuzzing();
         }
+        // BEGIN CHANGES AW
+        SimpleTransportHandler.doWriteout();
+        // END CHANGES AW
         if (fuzzerConfig.isStage2()) {
             LOGGER.log(LogLevel.CONSOLE_OUTPUT, "Starting stage 2: tls fuzzing for boundary violations");
             phase1(logFolder);

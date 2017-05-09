@@ -14,6 +14,10 @@ import java.io.BufferedOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+// BEGIN CHANGES AW
+import java.io.FileWriter;
+import javax.xml.bind.DatatypeConverter;
+// END CHANGES AW
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketException;
@@ -48,8 +52,21 @@ public class SimpleTransportHandler extends TransportHandler {
 
     private byte[] readTimingData;
 
+    // BEGIN CHANGES AW
+    private static int nInstances = -1;
+    private int iInstance = -1;
+    public static void doWriteout() {
+        nInstances = 0;
+    }
+    // END CHANGES AW
+
     public SimpleTransportHandler() {
         tlsTimeout = DEFAULT_TLS_TIMEOUT;
+        // BEGIN CHANGES AW
+        if (nInstances >= 0) {
+            iInstance = nInstances++;
+        }
+        // END CHANGES AW
     }
 
     @Override
@@ -73,6 +90,24 @@ public class SimpleTransportHandler extends TransportHandler {
     @Override
     public void sendData(byte[] data) throws IOException {
         bos.write(data);
+
+        // BEGIN CHANGES AW
+        // write (append) data to file
+        if (iInstance >= 0) {
+            try {
+                FileWriter fw = new FileWriter("data/stimuli/stimuli.txt", true);
+                fw.write(Integer.toString(iInstance));
+                fw.write(": ");
+                fw.write(DatatypeConverter.printHexBinary(data));
+                fw.write("\n");
+                fw.close();
+                iInstance = 0;
+            } catch(IOException ioe) {
+                System.err.println("IOException: " + ioe.getMessage());
+            }
+        }
+        // END CHANGES AW
+
         try {
             // todo: this must be improved in the future versions, best approach
             // would be to execute JNI calls or to execute the calls over a

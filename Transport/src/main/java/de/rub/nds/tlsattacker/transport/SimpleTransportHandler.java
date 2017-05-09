@@ -96,9 +96,9 @@ public class SimpleTransportHandler extends TransportHandler {
         if (iInstance >= 0) {
             try {
                 FileWriter fw = new FileWriter("data/stimuli/stimuli.txt", true);
-                fw.write(Integer.toString(iInstance));
-                fw.write(": ");
                 fw.write(DatatypeConverter.printHexBinary(data));
+                fw.write("ID=");
+                fw.write(Integer.toString(iInstance));
                 fw.write("\n");
                 fw.close();
                 iInstance = -1;

@@ -101,7 +101,7 @@ public class SimpleTransportHandler extends TransportHandler {
                 fw.write(DatatypeConverter.printHexBinary(data));
                 fw.write("\n");
                 fw.close();
-                iInstance = 0;
+                iInstance = -1;
             } catch(IOException ioe) {
                 System.err.println("IOException: " + ioe.getMessage());
             }

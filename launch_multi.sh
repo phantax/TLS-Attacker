@@ -1,10 +1,10 @@
 #!/bin/bash
 
-for i in $(seq 0 9); do
+for i in $(seq 0 3); do
 
-    DIR=data/iteration-$(printf '%03i' $i)
+    DIR=iteration-$(printf '%03i' $i)
 
-    mkdir -p $DIR
+    mkdir -p data/$DIR
 
     rm -f data/stimuli
     ln -s $DIR data/stimuli

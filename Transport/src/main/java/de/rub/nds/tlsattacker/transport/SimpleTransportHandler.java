@@ -55,8 +55,10 @@ public class SimpleTransportHandler extends TransportHandler {
     // BEGIN CHANGES AW
     private static int nInstances = -1;
     private int iInstance = -1;
-    public static void doWriteout() {
+    private static String stimuliFilename;
+    public static void doWriteout(String filename) {
         nInstances = 0;
+        stimuliFilename = filename;
     }
     // END CHANGES AW
 
@@ -95,10 +97,8 @@ public class SimpleTransportHandler extends TransportHandler {
         // write (append) data to file
         if (iInstance >= 0) {
             try {
-                FileWriter fw = new FileWriter("data/stimuli/stimuli.txt", true);
+                FileWriter fw = new FileWriter(stimuliFilename, true);
                 fw.write(DatatypeConverter.printHexBinary(data));
-                fw.write(";ID=");
-                fw.write(Integer.toString(iInstance));
                 fw.write("\n");
                 fw.close();
                 iInstance = -1;

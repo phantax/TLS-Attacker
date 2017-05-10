@@ -178,18 +178,24 @@ public class SimpleFuzzer extends Fuzzer {
             LOGGER.log(LogLevel.CONSOLE_OUTPUT, "Starting stage 1: crypto fuzzing ");
             startCryptoFuzzing();
         }
-        // BEGIN CHANGES AW
-        SimpleTransportHandler.doWriteout();
-        // END CHANGES AW
         if (fuzzerConfig.isStage2()) {
+            // BEGIN CHANGES AW
+            SimpleTransportHandler.doWriteout("data/stimuli/stimuli_phase1.hex");
+            // END CHANGES AW
             LOGGER.log(LogLevel.CONSOLE_OUTPUT, "Starting stage 2: tls fuzzing for boundary violations");
             phase1(logFolder);
             LOGGER.log(LogLevel.CONSOLE_OUTPUT,
                     "The following variables do not influence handshake (check manually for false-positives): {} ",
                     variablesWithoutHandshakeInfluence);
             LOGGER.log(LogLevel.CONSOLE_OUTPUT, "Phase 1 is over, starting phase 2");
+            // BEGIN CHANGES AW
+            SimpleTransportHandler.doWriteout("data/stimuli/stimuli_phase2.hex");
+            // END CHANGES AW
             phase23(2, logFolder);
             LOGGER.log(LogLevel.CONSOLE_OUTPUT, "Phase 2 is over, starting phase 3");
+            // BEGIN CHANGES AW
+            SimpleTransportHandler.doWriteout("data/stimuli/stimuli_phase3.hex");
+            // END CHANGES AW
             phase23(3, logFolder);
             LOGGER.log(LogLevel.CONSOLE_OUTPUT, "Phase 3 finished");
             LOGGER.log(LogLevel.CONSOLE_OUTPUT, "Total protocol flows: {}", totalProtocolFlows);

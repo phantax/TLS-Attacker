@@ -131,6 +131,11 @@ public class RecordHandler {
                     .getValue());
             int paddingLength = recordCipher.calculatePaddingLength(macedData.length);
             record.setPaddingLength(paddingLength);
+            // BEGIN CHANGES AW
+            if (Math.abs(record.getPaddingLength().getValue()) > 16*1024) {
+                throw new WorkflowExecutionException("Excessive padding requested");
+            }
+            // END CHANGES AW
             byte[] padding = recordCipher.calculatePadding(record.getPaddingLength().getValue());
             record.setPadding(padding);
             byte[] paddedMacedData = ArrayConverter.concatenate(macedData, record.getPadding().getValue());

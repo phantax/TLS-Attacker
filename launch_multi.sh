@@ -1,6 +1,6 @@
 #!/bin/bash
 
-for i in $(seq 0 9); do
+for i in $(seq 0 99); do
 
     DIR=iteration-$(printf '%03i' $i)
 
@@ -9,7 +9,7 @@ for i in $(seq 0 9); do
     rm -f data/stimuli
     ln -s $DIR data/stimuli
 
-    java -jar Runnable/target/TLS-Attacker-1.2.jar -loglevel ERROR multi_fuzzer -startup_command_file config-multifuzzer-openssl.xml
+    java -jar Runnable/target/TLS-Attacker-1.2.jar -loglevel ERROR multi_fuzzer -startup_command_file config-multifuzzer-openssl.xml | tee data/stimuli/log.txt
 
     rm -f data/stimuli
 
